@@ -1,0 +1,33 @@
+<form #form="ngForm" (ngSubmit)="createCourse(form)">
+    <div class="form-group">
+        <label for="courseName">Course Name</label>
+        <input required 
+                minlength="5" 
+                ngModel 
+                #courseName="ngModel" 
+                name="courseName" 
+                id="courseName" 
+                type="text"     
+                class="form-control">
+        <div *ngIf="!courseName.valid && courseName.touched">
+            Course Name is required
+            <div *ngIf="courseName.errors.minlength">
+                Min length should be more then 5
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="category">Category</label>
+        <select required ngModel #category="ngModel" id="category" name="category" type="text" class="form-control">
+            <option value=""></option>
+            <option *ngFor="let c of courses" [value]="c.id">
+                {{ c.name }}
+            </option>
+        </select>
+        <div *ngIf="!category.valid && category.touched">
+            Category is required
+        </div>
+    </div>
+    <button [disabled]="!form.valid" class="btn btn-primary"> Create </button>
+</form>
